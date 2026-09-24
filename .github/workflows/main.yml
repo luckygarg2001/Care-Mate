@@ -22,19 +22,19 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build web application
-        run: npm run build
+      - name: Prepare web files
+        run: |
+          mkdir -p dist
+          cp index.html dist/
+          cp -r *.js dist/ 2>/dev/null || true
+          cp -r *.css dist/ 2>/dev/null || true
+          cp -r assets dist/ 2>/dev/null || true
 
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
-
-      - name: Install Capacitor Android
-        run: |
-          npm install @capacitor/core @capacitor/cli @capacitor/android
-          npx cap add android
 
       - name: Sync Capacitor
         run: npx cap sync android
